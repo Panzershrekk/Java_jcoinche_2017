@@ -22,20 +22,20 @@
     </orderEntry>
     <orderEntry type="module-library">
       <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Téléchargements/netty-4.1.16.Final/jar/all-in-one/netty-all-4.1.16.Final.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
         <CLASSES />
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/Téléchargements/netty-4.1.16.Final/jar/all-in-one/netty-all-4.1.16.Final-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Téléchargements/netty-4.1.16.Final/jar/all-in-one/netty-all-4.1.16.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
