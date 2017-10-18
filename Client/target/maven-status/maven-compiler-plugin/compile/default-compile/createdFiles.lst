@@ -1,2 +1,4 @@
+math/Addition.class
+ChatHandler.class
 ClientMain.class
-MessageUtil.class
+ChatInit.class
