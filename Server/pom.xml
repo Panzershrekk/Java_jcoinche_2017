@@ -16,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ServerClass</mainClass>
+                            <mainClass>ServerMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -27,7 +27,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ServerClass</mainClass>
+                            <mainClass>ServerMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
