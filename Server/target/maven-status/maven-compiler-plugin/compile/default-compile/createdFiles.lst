@@ -1,3 +1,5 @@
 ServerMain.class
+GameManager$Asset.class
+GameManager.class
 ServerInitializer.class
 ServerHandler.class

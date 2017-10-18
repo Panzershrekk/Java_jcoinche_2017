@@ -21,7 +21,7 @@ public class ClientMain {
 
     public static void main(String[] args) {
         String server = "localhost";
-        int port = 5252;
+        int port = 8000;
         int containerPort = 8094;
         new ClientMain(server, port, containerPort).start();
     }

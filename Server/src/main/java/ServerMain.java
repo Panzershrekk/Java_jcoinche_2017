@@ -1,4 +1,3 @@
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,7 +12,7 @@ public class ServerMain {
     }
 
     public void start() {
-        port = 5252;
+        port = 8000;
         EventLoopGroup producer = new NioEventLoopGroup();
         EventLoopGroup consumer = new NioEventLoopGroup();
 
@@ -34,4 +33,5 @@ public class ServerMain {
         }
 
     }
+
 }

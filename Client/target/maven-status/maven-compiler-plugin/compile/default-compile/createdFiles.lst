@@ -1,4 +1,6 @@
 ClientHandler.class
 ClientMain.class
-math/Addition.class
+Card.class
 ClientInitializer.class
+math/Addition.class
+Hand.class
