@@ -15,6 +15,7 @@ public class ServerMain {
         port = 8000;
         EventLoopGroup producer = new NioEventLoopGroup();
         EventLoopGroup consumer = new NioEventLoopGroup();
+        //ProtoTest.Person.Builder test = ProtoTest.Person.newBuilder();
 
         try {
 

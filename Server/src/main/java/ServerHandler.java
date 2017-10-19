@@ -20,6 +20,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         }
         System.out.println("[SERVER] - " + incoming.remoteAddress() + " has joined\n");
         channels.add(ctx.channel());
+        gameMngr.addPlayer();
     }
 
     @Override
@@ -31,6 +32,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         }
         System.out.println("A player " + incoming.remoteAddress() + " has left\n");
         channels.remove(ctx.channel());
+        gameMngr.removePlayer();
     }
 
     @Override
