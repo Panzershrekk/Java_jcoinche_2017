@@ -8,7 +8,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     private static final ChannelGroup channels = new DefaultChannelGroup("Containers", GlobalEventExecutor.INSTANCE);
-    private GameManager gameMngr = new GameManager();
+    private static final GameManager gameMngr = new GameManager();
 
 
     @Override

@@ -16,18 +16,18 @@ public class CardTest {
                 number.compareTo('Q') != 0 &&
                 number.compareTo('K') != 0)
         {
-            fail("Wrong type of Card");
+            fail("Wrong number of Card");
         }
     }
 
     @Test
     public void setType() throws Exception {
-        String type = "Spade";
+        Character type = 'C';
 
-        if (type.compareTo("Diamond") != 0 &&
-                type.compareTo("Spade") != 0 &&
-                type.compareTo("Heart") != 0 &&
-                type.compareTo("Club") != 0)
+        if (type.compareTo('C') != 0 &&
+                type.compareTo('S') != 0 &&
+                type.compareTo('H') != 0 &&
+                type.compareTo('D') != 0)
         {
             fail("Wrong type of Card");
         }

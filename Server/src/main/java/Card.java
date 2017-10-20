@@ -1,27 +1,46 @@
 public class Card {
 
-    private String      type;
+    private Character      type;
     private Character   number;
+    private int score;
+    private int assetScore;
 
-    public Card(String type, Character number) {
+    public Card(Character type, Character number, int score, int assetScore) {
         this.type = type;
         this.number = number;
-
+        this.score = score;
+        this.assetScore = assetScore;
     }
 
     public void setNumber(Character number) {
         this.number = number;
     }
 
-    public void setType(String type) {
+    public void setType(Character type) {
         this.type = type;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setAssetScore(int assetScore) {
+        this.assetScore = assetScore;
     }
 
     public Character getNumber() {
         return number;
     }
 
-    public String getType() {
+    public Character getType() {
         return type;
+    }
+
+    public int getAssetScore() {
+        return assetScore;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
