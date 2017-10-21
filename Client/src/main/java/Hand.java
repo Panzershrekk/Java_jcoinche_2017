@@ -1,22 +1,38 @@
-import java.util.Map;
+import java.util.Vector;
 
 public class Hand {
-
-    private int inHand;
-    private Map<String, Card> hand;
-
+    private Vector<Card> hand;
 
     public Hand() {
-        inHand = 0;
+        this.hand = new Vector<Card>();
     }
 
-    public void addCard(String type, Character number) {
-        hand.put(type+number, new Card(type, number));
-        inHand += 1;
+    public void readHand(String sendCard)
+    {
+        if (sendCard.startsWith("CARD:"))
+            fillHand(sendCard);
     }
 
-    public void playCard(String type, Character number) {
-        hand.remove(type+number);
-        inHand -= 1;
+    public void fillHand(String info)
+    {
+        int i = 0;
+        int pos1 = 5;
+        int pos2 = 6;
+
+        System.out.println("HUEHUEHUEHUE");
+        while (i != 8)
+        {
+            this.hand.add(new Card(info.charAt(pos1), info.charAt(pos2)));
+            pos1 += 3;
+            pos2 += 3;
+            i++;
+        }
+        printHand();
+    }
+
+    public void printHand()
+    {
+        for (Card c : hand)
+            System.out.println(c.getType().toString() + c.getNumber().toString() + " ; ");
     }
 }

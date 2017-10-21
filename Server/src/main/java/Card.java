@@ -5,6 +5,12 @@ public class Card {
     private int score;
     private int assetScore;
 
+    public Card(Character type, Character number)
+    {
+        this.type = type;
+        this.number = number;
+    }
+
     public Card(Character type, Character number, int score, int assetScore) {
         this.type = type;
         this.number = number;
