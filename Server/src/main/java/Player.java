@@ -30,10 +30,21 @@ public class Player {
         return channelId;
     }
 
+    public Vector<Card> getDeck() {
+        return deck;
+    }
+
     public void addCard(Character type, Character number)
     {
         this.deck.add(new Card(type, number));
-        printDeck();
+    }
+
+    public String getHand()
+    {
+        String card = "";
+        for (Card c : deck)
+            card += c.getType().toString() + c.getNumber().toString() + ";";
+        return (card);
     }
 
     public void printDeck()
@@ -42,5 +53,10 @@ public class Player {
             System.out.println(c.getType().toString() + c.getNumber().toString());
         }
         System.out.println("\n");
+    }
+
+    public void removeFromDeck(Card c)
+    {
+        deck.remove(c);
     }
 }

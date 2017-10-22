@@ -6,6 +6,7 @@ public class GameManager {
     private int TeamScore2;
     private int nbrPlayer;
     private boolean GameStarted;
+    private int nbrInitAction;
     private boolean RoundStarted;
     private Vector<Card> deck;
     private Vector<Card> board;
@@ -25,6 +26,7 @@ public class GameManager {
         this.Coinched = false;
         this.CounterCoinched = false;
         this.RoundStarted = false;
+        this.nbrInitAction = 0;
         this.asset = 'H';
         this.deck = new Vector<Card>();
         this.board = new Vector<Card>();
@@ -92,7 +94,7 @@ public class GameManager {
         if (distribOrder > 30)
             distribOrder = 0;
         this.distribPlayer += 1;
-        return ("CARD:" + card);
+        return ("");
     }
 
 
@@ -221,51 +223,99 @@ public class GameManager {
         return (false);
     }
 
+    public String showPlayerHand(String player)
+    {
+        String msg = "HAND: ";
+        for (Player p : players)
+        {
+            if (p.getChannelId().compareTo(player) == 0)
+                msg += p.getHand();
+        }
+        return (msg);
+    }
+
     public String readAction(String action, String player){
         String msg = "";
         if (isGameStarted() == true) {
             if (this.board.size() == 4)
                 return (checkWinner() + "");
+            if (action.compareTo("HAND") == 0)
+                return (showPlayerHand(player));
             if (isCurrentPlayerTheOne(player) == true) {
-                if (action.startsWith("BET ") && action.length() <= 7 && betIsValid(action) == true) {
-                    msg = currentlyPlaying + "";
-                    PlayingOrder();
-                    return ("PLAYER" + msg + "BET" + betValue);
+                if (isRoundStarted() == false) {
+                    if (action.startsWith("BET ") && action.length() <= 7 && betIsValid(action) == true) {
+                        msg = currentlyPlaying + "";
+                        PlayingOrder();
+                        nbrInitAction += 1;
+                        if (nbrInitAction == 4)
+                            RoundStarted = true;
+                        return ("ACTION: PLAYER" + msg + "BET" + betValue);
+                    }
+                    if (action.compareTo("COINCHE") == 0 && betValue > 0) {
+                        this.Coinched = true;
+                        msg = currentlyPlaying + "";
+                        PlayingOrder();
+                        nbrInitAction += 1;
+                        if (nbrInitAction == 4)
+                            RoundStarted = true;
+                        return ("ACTION: PLAYER " + msg + " COINCHED");
+                    }
+                    if (action.compareTo("COUNTERCOINCHE") == 0 && Coinched == true) {
+                        this.CounterCoinched = true;
+                        msg = currentlyPlaying + "";
+                        PlayingOrder();
+                        nbrInitAction += 1;
+                        if (nbrInitAction == 4)
+                            RoundStarted = true;
+                        return ("ACTION: PLAYER " + msg + " COUNTERCOINCHED");
+                    }
+                    if (action.compareTo("PASS") == 0) {
+                        msg = currentlyPlaying + "";
+                        PlayingOrder();
+                        nbrInitAction += 1;
+                        if (nbrInitAction == 4)
+                            RoundStarted = true;
+                        return ("ACTION: PLAYER " + msg + " PASSED");
+                    }
                 }
-                if (action.compareTo("COINCHE") == 0 && betValue > 0) {
-                    this.Coinched = true;
-                    msg = currentlyPlaying + "";
-                    PlayingOrder();
-                    return ("PLAYER " + msg + " COINCHED");
-                }
-                if (action.compareTo("COUNTERCOINCHE") == 0 && Coinched == true) {
-                    this.CounterCoinched = true;
-                    msg = currentlyPlaying + "";
-                    PlayingOrder();
-                    return ("PLAYER " + msg + " COUNTERCOINCHED");
-                }
-                if (action.compareTo("PASS") == 0) {
-                    msg = currentlyPlaying + "";
-                    PlayingOrder();
-                    return ("PLAYER " + msg + " PASSED");
-                }
-                if (isRoundStarted() == true) {
-                    if (action.startsWith("PLAY ") && action.length() == 7 && isCard(action.charAt(5), action.charAt(6)) == true) {
+                else  {
+                    if (action.startsWith("PLAY ") && action.length() == 7 && isCard(action.charAt(5), action.charAt(6)) == true && playerHasCard(player, action.charAt(5), action.charAt(6)) == true) {
                         this.board.add(findCard(action.charAt(5), action.charAt(6)));
                         PlayingOrder();
                         if (this.board.size() == 4) {
                             int winner = checkWinner();
                             cleanBoard();
-                            return ("Player played " + action.charAt(5) + action.charAt(6) + "\n" + winner);
+                            return ("ACTION: Player played " + action.charAt(5) + action.charAt(6) + "\n" + winner);
                         } else
-                            return ("Player played " + action.charAt(5) + action.charAt(6));
+                            return ("ACTION: Player played " + action.charAt(5) + action.charAt(6));
+                    }
+                    else
+                        return ("INFO: you don't have this card");
+                }
+                return "INFO: Command invalid";
+            }
+            return "INFO: Not your turn";
+        }
+        return "INFO: Awaiting player";
+    }
+
+
+    public boolean playerHasCard(String player, Character type, Character number)
+    {
+        for (Player p : players)
+        {
+            if (p.getChannelId().compareTo(player) == 0)
+            {
+                for (Card c: p.getDeck())
+                {
+                    if (c.getNumber().compareTo(number) == 0 && c.getType().compareTo(type) == 0) {
+                        p.removeFromDeck(c);
+                        return (true);
                     }
                 }
-                return "Command invalid";
             }
-            return "Not your turn";
         }
-        return "Awaiting player";
+        return (false);
     }
 
     public void addPlayer()

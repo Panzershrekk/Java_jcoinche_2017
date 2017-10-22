@@ -19,7 +19,6 @@ public class Hand {
         int pos1 = 5;
         int pos2 = 6;
 
-        System.out.println("HUEHUEHUEHUE");
         while (i != 8)
         {
             this.hand.add(new Card(info.charAt(pos1), info.charAt(pos2)));
