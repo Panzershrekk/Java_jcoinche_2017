@@ -14,14 +14,6 @@ public class Player {
         System.out.println(playerNbr + " " + channelId);
     }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
-    }
-
-    public void setPlayerNbr(int playerNbr) {
-        this.playerNbr = playerNbr;
-    }
-
     public int getPlayerNbr() {
         return playerNbr;
     }
@@ -45,14 +37,6 @@ public class Player {
         for (Card c : deck)
             card += c.getType().toString() + c.getNumber().toString() + ";";
         return (card);
-    }
-
-    public void printDeck()
-    {
-        for (Card c : deck) {
-            System.out.println(c.getType().toString() + c.getNumber().toString());
-        }
-        System.out.println("\n");
     }
 
     public void removeFromDeck(Card c)

@@ -5,14 +5,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class ServerMain {
 
-    int port;
+    private static int port;
 
     public static void main(String[] args) {
+        port = Integer.valueOf(args[0]);
         new ServerMain().start();
     }
 
     public void start() {
-        port = 8000;
         EventLoopGroup producer = new NioEventLoopGroup();
         EventLoopGroup consumer = new NioEventLoopGroup();
 

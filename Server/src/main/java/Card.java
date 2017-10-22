@@ -18,22 +18,6 @@ public class Card {
         this.assetScore = assetScore;
     }
 
-    public void setNumber(Character number) {
-        this.number = number;
-    }
-
-    public void setType(Character type) {
-        this.type = type;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setAssetScore(int assetScore) {
-        this.assetScore = assetScore;
-    }
-
     public Character getNumber() {
         return number;
     }

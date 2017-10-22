@@ -1,5 +1,5 @@
 cd ./Client
-./compile.sh
+mvn package
 cd -
 cd ./Server
-./compile.sh
+mvn package

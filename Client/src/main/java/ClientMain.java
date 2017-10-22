@@ -9,21 +9,19 @@ import java.io.InputStreamReader;
 
 public class ClientMain {
 
-    String server;
+    String host;
     int port;
     int containerPort;
 
     public ClientMain(String server, int port, int containerPort) {
-        this.server = server;
+        this.host = server;
         this.port = port;
         this.containerPort = containerPort;
     }
 
     public static void main(String[] args) {
-        String server = "localhost";
-        int port = 8000;
         int containerPort = 8094;
-        new ClientMain(server, port, containerPort).start();
+        new ClientMain(args[0].toString(), Integer.valueOf(args[1]), containerPort).start();
     }
 
     public void start() {
@@ -32,7 +30,7 @@ public class ClientMain {
         try {
             Bootstrap bootstrap = new Bootstrap().group(group).channel(NioSocketChannel.class).handler(new ClientInitializer());
 
-            Channel channel = bootstrap.connect(server, port).sync().channel();
+            Channel channel = bootstrap.connect(host, port).sync().channel();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             while(true){

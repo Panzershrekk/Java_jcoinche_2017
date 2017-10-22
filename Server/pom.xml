@@ -8,6 +8,7 @@
     <artifactId>jcoinche-server</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -33,6 +34,9 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <finalName>${artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                        <outputDirectory>../target</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>

@@ -1,2 +1,6 @@
-ServerHandlerTest.class
+PlayerTest.class
+ServerMainTest.class
 CardTest.class
+ServerInitializerTest.class
+ServerHandlerTest.class
+GameManagerTest.class

@@ -326,6 +326,7 @@ public class GameManager {
                                 shuffle();
                                 distrib();
                                 chooseAsset();
+                                addScore(winner);
                                 betValue = 0;
                                 return ("ACTION: Round is over Re-shuffling for everyone.\nTeam1 won:" + getTeamScoreRound1() + "\nTeam2 won: " + getTeamScoreRound2()  +" this round\nCurrent asset is " + asset);
                             }
@@ -413,6 +414,15 @@ public class GameManager {
         }
     }
 
+    public String affBoard()
+    {
+
+        String msg = "Board:";
+        for (Card c : board)
+            msg += c.getType().toString() + c.getNumber().toString() + ";" ;
+        return (msg);
+    }
+
     public void removePlayerFromVector(String id)
     {
         for (Player p : this.players)
@@ -437,14 +447,6 @@ public class GameManager {
 
     public int getCurrentlyPlaying() {
         return currentlyPlaying;
-    }
-
-    public int getTeamScore1() {
-        return TeamScore1;
-    }
-
-    public int getTeamScore2() {
-        return TeamScore2;
     }
 
     public int getTeamScoreRound1() {

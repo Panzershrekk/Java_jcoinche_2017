@@ -13,23 +13,25 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            channel.write("A new player - " + incoming.remoteAddress() + " has joined\n");
-            channel.flush();
-        }
-        System.out.println("[SERVER] - " + incoming.remoteAddress() + " has joined\n");
-        channels.add(ctx.channel());
-        gameMngr.addPlayer();
-        gameMngr.addPlayerInVector(incoming.remoteAddress().toString());
-        if (channels.size() == 4) {
+        if (channels.size() < 4) {
+            Channel incoming = ctx.channel();
             for (Channel channel : channels) {
-                channel.write("Welcome all to JCoinche game. Let us begin the game\nType \"HAND\" to see your cards\nCurrent asset is " + gameMngr.getAsset());
-                channel.flush();
-                channel.write(gameMngr.distrib());
+                channel.write("A new player - " + incoming.remoteAddress() + " has joined\n");
                 channel.flush();
             }
-            gameMngr.setGameStarted(true);
+            System.out.println("[SERVER] - " + incoming.remoteAddress() + " has joined\n");
+            channels.add(ctx.channel());
+            gameMngr.addPlayer();
+            gameMngr.addPlayerInVector(incoming.remoteAddress().toString());
+            if (channels.size() == 4) {
+                for (Channel channel : channels) {
+                    channel.write("Welcome all to JCoinche game. Let us begin the game\nType \"HAND\" to see your cards\nCurrent asset is " + gameMngr.getAsset());
+                    channel.flush();
+                    channel.write(gameMngr.distrib());
+                    channel.flush();
+                }
+                gameMngr.setGameStarted(true);
+            }
         }
     }
 
@@ -44,7 +46,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         channels.remove(ctx.channel());
         gameMngr.removePlayer();
         gameMngr.removePlayerFromVector(incoming.remoteAddress().toString());
-        if (gameMngr.getNbrPlayer() < 4 && gameMngr.isGameStarted() == true) {
+        if (gameMngr.getNbrPlayer() <= 4 && gameMngr.isGameStarted() == true) {
             for (Channel channel : channels) {
                 channel.write("A player left the game disconnecting from server\n");
                 channel.flush();
@@ -58,7 +60,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Channel incoming = ctx.channel();
         String clientMsg = "";
         System.out.println("[INFO] - " + incoming.remoteAddress() + " - " + msg);
-        //clientMsg = gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString());
         for (Channel channel : channels) {
             if (channel == incoming)
                 clientMsg = gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString());
@@ -71,7 +72,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 channel.flush();
             }
             else if (clientMsg.startsWith("ACTION: ") == true) {
-                channel.write(clientMsg);
+                channel.write(clientMsg + "\n" + gameMngr.affBoard());
                 channel.flush();
             }
         }
