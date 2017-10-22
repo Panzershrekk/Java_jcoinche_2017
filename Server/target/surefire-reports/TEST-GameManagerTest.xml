@@ -65,7 +65,7 @@
   <testcase time="0.003" classname="GameManagerTest" name="getNbrPlayer"/>
   <testcase time="0" classname="GameManagerTest" name="chooseAsset"/>
   <testcase time="0" classname="GameManagerTest" name="addPlayerInVector"/>
-  <testcase time="0.001" classname="GameManagerTest" name="isRoundStarted"/>
+  <testcase time="0" classname="GameManagerTest" name="isRoundStarted"/>
   <testcase time="0" classname="GameManagerTest" name="addScore"/>
   <testcase time="0" classname="GameManagerTest" name="isCard"/>
   <testcase time="0" classname="GameManagerTest" name="readAction"/>
@@ -74,17 +74,17 @@
   <testcase time="0" classname="GameManagerTest" name="cleanBoard"/>
   <testcase time="0" classname="GameManagerTest" name="isCurrentPlayerTheOne"/>
   <testcase time="0" classname="GameManagerTest" name="findCard"/>
-  <testcase time="0.001" classname="GameManagerTest" name="showPlayerHand"/>
-  <testcase time="0" classname="GameManagerTest" name="playingOrder"/>
+  <testcase time="0" classname="GameManagerTest" name="showPlayerHand"/>
+  <testcase time="0.001" classname="GameManagerTest" name="playingOrder"/>
   <testcase time="0" classname="GameManagerTest" name="addInBoard"/>
   <testcase time="0" classname="GameManagerTest" name="betIsValid"/>
   <testcase time="0" classname="GameManagerTest" name="setGameStarted"/>
   <testcase time="0" classname="GameManagerTest" name="addRoundScore"/>
-  <testcase time="0" classname="GameManagerTest" name="addPlayer"/>
+  <testcase time="0.001" classname="GameManagerTest" name="addPlayer"/>
   <testcase time="0" classname="GameManagerTest" name="setCurrentlyPlaying"/>
-  <testcase time="0.001" classname="GameManagerTest" name="getTeamScoreRound1"/>
+  <testcase time="0" classname="GameManagerTest" name="getTeamScoreRound1"/>
   <testcase time="0" classname="GameManagerTest" name="getTeamScoreRound2"/>
-  <testcase time="0" classname="GameManagerTest" name="affBoard"/>
+  <testcase time="0.001" classname="GameManagerTest" name="affBoard"/>
   <testcase time="0" classname="GameManagerTest" name="removePlayerFromVector"/>
   <testcase time="0" classname="GameManagerTest" name="isGameStarted"/>
   <testcase time="0" classname="GameManagerTest" name="checkWinner"/>

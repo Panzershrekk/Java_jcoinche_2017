@@ -272,7 +272,7 @@ public class GameManager {
                 return (showPlayerHand(player));
            if (isCurrentPlayerTheOne(player) == true) {
                 if (isRoundStarted() == false) {
-                    if (action.startsWith("BET ") && action.length() <= 7 && betIsValid(action) == true) {
+                    if (action.startsWith("BET ") && action.length() <= 7 && betIsValid(action) == true && Coinched == false) {
                         msg = currentlyPlaying + "";
                         PlayingOrder();
                         nbrInitAction += 1;
@@ -280,7 +280,7 @@ public class GameManager {
                             RoundStarted = true;
                         return ("ACTION: PLAYER" + msg + "BET" + betValue);
                     }
-                    if (action.compareTo("COINCHE") == 0 && betValue > 0) {
+                    if (action.compareTo("COINCHE") == 0 && betValue > 0 && Coinched == false) {
                         this.Coinched = true;
                         msg = currentlyPlaying + "";
                         PlayingOrder();
@@ -327,6 +327,8 @@ public class GameManager {
                                 distrib();
                                 chooseAsset();
                                 addScore(winner);
+                                Coinched = false;
+                                CounterCoinched = false;
                                 betValue = 0;
                                 return ("ACTION: Round is over Re-shuffling for everyone.\nTeam1 won:" + getTeamScoreRound1() + "\nTeam2 won: " + getTeamScoreRound2()  +" this round\nCurrent asset is " + asset);
                             }
