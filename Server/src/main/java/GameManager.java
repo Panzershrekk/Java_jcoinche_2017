@@ -4,6 +4,8 @@ public class GameManager {
 
     private int TeamScore1;
     private int TeamScore2;
+    private int TeamScoreRound1;
+    private int TeamScoreRound2;
     private int nbrPlayer;
     private boolean GameStarted;
     private int nbrInitAction;
@@ -22,12 +24,14 @@ public class GameManager {
     public GameManager() {
         this.TeamScore1 = 0;
         this.TeamScore2 = 0;
+        this.TeamScoreRound1 = 0;
+        this.TeamScoreRound2 = 0;
         this.nbrPlayer = 0;
         this.Coinched = false;
         this.CounterCoinched = false;
         this.RoundStarted = false;
         this.nbrInitAction = 0;
-        this.asset = 'H';
+        this.asset = chooseAsset();
         this.deck = new Vector<Card>();
         this.board = new Vector<Card>();
         this.players = new Vector<Player>();
@@ -97,6 +101,23 @@ public class GameManager {
         return ("");
     }
 
+    public Character chooseAsset()
+    {
+
+        int random = 1 + (int)(Math.random() * ((4 - 1) + 1));
+        Character asset = 'H';
+
+        if (random == 1)
+            asset = 'H';
+        else if (random == 2)
+            asset = 'C';
+        else if (random == 4)
+            asset = 'D';
+        else if (random == 3)
+            asset = 'S';
+        return (asset);
+    }
+
 
     public Card findCard(Character type, Character number)
     {
@@ -157,6 +178,18 @@ public class GameManager {
 
     public void addScore(int winner)
     {
+        if (this.CounterCoinched == true)
+            betValue *= 4;
+        else if (this.Coinched == true)
+            betValue *= 2;
+        if (winner % 2 == 1)
+            this.TeamScore1 += TeamScoreRound1 + betValue;
+        else
+            this.TeamScore2 += TeamScoreRound2 + betValue;
+    }
+
+    public void addRoundScore(int winner)
+    {
         int score = 0;
 
         for (Card c : board)
@@ -166,14 +199,10 @@ public class GameManager {
             else
                 score += c.getScore();
         }
-        if (this.CounterCoinched == true)
-            betValue *= 4;
-        else if (this.Coinched == true)
-            betValue *= 2;
         if (winner % 2 == 1)
-            this.TeamScore1 += score + betValue;
+            this.TeamScoreRound1 += score;
         else
-            this.TeamScore2 += score + betValue;
+            this.TeamScoreRound2 += score;
     }
 
     public void cleanBoard()
@@ -241,7 +270,7 @@ public class GameManager {
                 return (checkWinner() + "");
             if (action.compareTo("HAND") == 0)
                 return (showPlayerHand(player));
-            if (isCurrentPlayerTheOne(player) == true) {
+           if (isCurrentPlayerTheOne(player) == true) {
                 if (isRoundStarted() == false) {
                     if (action.startsWith("BET ") && action.length() <= 7 && betIsValid(action) == true) {
                         msg = currentlyPlaying + "";
@@ -284,8 +313,23 @@ public class GameManager {
                         PlayingOrder();
                         if (this.board.size() == 4) {
                             int winner = checkWinner();
+                            addRoundScore(winner);
                             cleanBoard();
-                            return ("ACTION: Player played " + action.charAt(5) + action.charAt(6) + "\n" + winner);
+                            if (TeamScore1 >= 3000)
+                                return ("ACTION: TEAM 1 WON.");
+                            if (TeamScore2 >= 3000)
+                                return ("ACTION: TEAM 2 WON.");
+                            if (players.elementAt(1).getDeck().isEmpty() == true)
+                            {
+                                nbrInitAction = 0;
+                                RoundStarted = false;
+                                shuffle();
+                                distrib();
+                                chooseAsset();
+                                betValue = 0;
+                                return ("ACTION: Round is over Re-shuffling for everyone.\nTeam1 won:" + getTeamScoreRound1() + "\nTeam2 won: " + getTeamScoreRound2()  +" this round\nCurrent asset is " + asset);
+                            }
+                            return ("ACTION: Player played " + action.charAt(5) + action.charAt(6) + "\n");
                         } else
                             return ("ACTION: Player played " + action.charAt(5) + action.charAt(6));
                     }
@@ -393,5 +437,25 @@ public class GameManager {
 
     public int getCurrentlyPlaying() {
         return currentlyPlaying;
+    }
+
+    public int getTeamScore1() {
+        return TeamScore1;
+    }
+
+    public int getTeamScore2() {
+        return TeamScore2;
+    }
+
+    public int getTeamScoreRound1() {
+        return TeamScoreRound1;
+    }
+
+    public int getTeamScoreRound2() {
+        return TeamScoreRound2;
+    }
+
+    public Character getAsset() {
+        return asset;
     }
 }

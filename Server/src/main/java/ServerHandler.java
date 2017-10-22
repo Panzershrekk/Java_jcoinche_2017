@@ -24,7 +24,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         gameMngr.addPlayerInVector(incoming.remoteAddress().toString());
         if (channels.size() == 4) {
             for (Channel channel : channels) {
-                channel.write("Welcome all to JCoinche game. Let us begin the game\nType \"HAND\" to see your cards");
+                channel.write("Welcome all to JCoinche game. Let us begin the game\nType \"HAND\" to see your cards\nCurrent asset is " + gameMngr.getAsset());
                 channel.flush();
                 channel.write(gameMngr.distrib());
                 channel.flush();
@@ -58,8 +58,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Channel incoming = ctx.channel();
         String clientMsg = "";
         System.out.println("[INFO] - " + incoming.remoteAddress() + " - " + msg);
-        clientMsg = gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString());
+        //clientMsg = gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString());
         for (Channel channel : channels) {
+            if (channel == incoming)
+                clientMsg = gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString());
             if (channel == incoming && clientMsg.startsWith("INFO: ")) {
                 channel.write(clientMsg);
                 channel.flush();
@@ -69,10 +71,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 channel.flush();
             }
             else if (clientMsg.startsWith("ACTION: ") == true) {
-                channel.write(gameMngr.readAction(msg.toString().trim().replaceAll("\\s+", " ").toUpperCase(), incoming.remoteAddress().toString()));
+                channel.write(clientMsg);
                 channel.flush();
             }
         }
+        gameMngr.chooseAsset();
         System.out.println("Currently playing : " + gameMngr.getCurrentlyPlaying());
     }
 
